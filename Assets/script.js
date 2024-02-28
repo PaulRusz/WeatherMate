@@ -37,22 +37,22 @@ function weatherDashboard(event) {
 // obtains the current weather for a city
 function currentweather(cityName) {
 
-    var queryURL = `api.openweathermap.org/data/2.5/weather?q={cityName}&appid={API key}`;
+    var queryURL = `api.openweathermap.org/data/2.5/weather?q={cityName}&appid={98d710491c449ad5a6ba81a14f1ff914}`;
     fetch(queryURL)
         .then(function (response) {
             return response.json()
         })
         .then(function (currentData) {
             console.log(currentData);
-            var currentForecast = `https://api.openweathermap.org/data/2.5/onecall?lat=${currentData.coord.lat}&lon=${currentData.coord.lon}&appid=9dd332c2cdf5ad3eee158912aa75b747&units=imperial`
+            var currentForecast = `api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&appid={98d710491c449ad5a6ba81a14f1ff914}`
             fetch(currentForecast)
                 .then(function (response) {
                     return response.json();
                 })
                 .then(function (fiveDayForecast) {
-                    if (searchHistory.includes(currentData.name) === false) {
-                        searchHistory.push(currentData.name)
-                        localStorage.setItem("city", JSON.stringify(searchHistory));
+                    if (cityResults.includes(currentData.name) === false) {
+                        cityResults.push(currentData.name)
+                        localStorage.setItem("city", JSON.stringify(cityResults));
                     }
                     showCity();
                     console.log(fiveDayForecast);
