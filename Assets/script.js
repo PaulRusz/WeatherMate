@@ -13,7 +13,8 @@ var cityInputEl = document.querySelector('#city-input')
 var cityHistoryEl = document.querySelector('#cityHistory')
 var eraseHistory = document.querySelector('#erase-history')
 
-searchHistory = ['']
+
+var searchHistory = JSON.parse(localStorage.getItem("city")) || []
 
 
 
@@ -37,22 +38,23 @@ function weatherDashboard(event) {
 // obtains the current weather for a city
 function currentweather(cityName) {
 
-    var queryURL = `api.openweathermap.org/data/2.5/weather?q={cityName}&appid={98d710491c449ad5a6ba81a14f1ff914}`;
+    var queryURL = `http://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${APIKey}`;
+    console.trace(cityName)
     fetch(queryURL)
         .then(function (response) {
             return response.json()
         })
         .then(function (currentData) {
             console.log(currentData);
-            var currentForecast = `api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&appid={98d710491c449ad5a6ba81a14f1ff914}`
+            var currentForecast = `http://api.openweathermap.org/data/2.5/forecast?lat=${currentData.coord.lat}&lon=${currentData.coord.lon}&appid=${APIKey}`
             fetch(currentForecast)
                 .then(function (response) {
                     return response.json();
                 })
                 .then(function (fiveDayForecast) {
-                    if (cityResults.includes(currentData.name) === false) {
-                        cityResults.push(currentData.name)
-                        localStorage.setItem("city", JSON.stringify(cityResults));
+                    if (!searchHistory.includes(currentData.name)) {
+                        searchHistory.push(currentData.name)
+                        localStorage.setItem("city", JSON.stringify(searchHistory));
                     }
                     showCity();
                     console.log(fiveDayForecast);
@@ -65,16 +67,16 @@ function currentweather(cityName) {
                     <li>Temp: ${currentData.main.temp}</li>
                     <li>Wind: ${currentData.wind.speed}</li>
                     <li>Humidity: ${currentData.main.humidity}</li>
-                    <li>UV: <span style="background-color: green; color: white;"> ${fiveDayForecast.current.uvi}</span></li>
                 </ul>`;
                     var cards = "";
                     for (var i = 1; i < 6; i++) {
-                        cards = cards + `<ul class="col-12 col-xl-2 day">
-                        <li>${moment(fiveDayData.daily[i].dt, "X").format(" MM/DD/YYYY")}</li>
-                        <li><img src ="http://openweathermap.org/img/wn/${fiveDayForecast.daily[i].weather[0].icon}@2x.png" /></li>
-                        <li>Temp: ${fiveDayForecast.daily[i].temp.day}</li>
-                        <li>Wind: ${fiveDayForecast.daily[i].wind_speed}</li>
-                        <li>Humidity: ${fiveDayForecast.daily[i].humidity}</li>
+                        var forecastIndex = i * 8 - 1
+                        cards = cards + `<ul class="col-2 col-xl-2 day">
+                        <li>${moment(fiveDayForecast.list[forecastIndex].dt, "X").format(" MM/DD/YYYY")}</li>
+                        <li><img src ="http://openweathermap.org/img/wn/${fiveDayForecast.list[forecastIndex].weather[0].icon}@2x.png" /></li>
+                        <li>Temp: ${fiveDayForecast.list[forecastIndex].main.temp}</li>
+                        <li>Wind: ${fiveDayForecast.list[forecastIndex].wind_speed}</li>
+                        <li>Humidity: ${fiveDayForecast.list[forecastIndex].humidity}</li>
                     </ul>`;
                     }
 
@@ -92,10 +94,11 @@ function showCity() {
     var cityList = ""
     for (var i = 0; i < searchHistory.length; i++) {
         cityList =
-            cityList + '<button class="btn btn-secondary my-2" type="submit">${searchHistory[i]}</button>'
+            // must be backticks not single quotes
+            cityList + `<button class="btn btn-secondary my-2" type="submit">${searchHistory[i]}</button>`
     }
     cityResults.innerHTML = cityList;
-    var dashTwo = document.querySelectorAll(".my-2")
+    var dashTwo = cityResults.querySelectorAll("button")
     for (var i = 0; i < dashTwo.length; i++) {
         dashTwo[i].addEventListener("click", function () {
             currentweather(this.textContent);
@@ -114,5 +117,5 @@ function clearHistory() {
     searchHistory = [];
 }
 eraseHistory.addEventListener("click", function () {
-    clearHistory
+    clearHistory();
 });
