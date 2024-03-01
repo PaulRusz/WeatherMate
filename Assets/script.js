@@ -95,7 +95,7 @@ function showCity() {
     for (var i = 0; i < searchHistory.length; i++) {
         cityList =
             // must be backticks not single quotes
-            cityList + `<button class="btn btn-secondary my-2" type="submit">${searchHistory[i]}</button>`
+            cityList + `<button class="btn btn-secondary my-2" type="submit">${searchHistory[i]}</button><br>`
     }
     cityResults.innerHTML = cityList;
     var dashTwo = cityResults.querySelectorAll("button")

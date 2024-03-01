@@ -23,8 +23,6 @@ h1 {
 
 #citySearch {
     font-size: 25px;
-    position: relative;
-    display: flex;
     flex-direction: column;
     min-width: 0;
     word-wrap: break-word;
@@ -42,7 +40,7 @@ h1 {
 }
 
 #cityResults {
-    display: flex;
+
     flex-direction: column;
     min-width: 0;
     word-wrap: break-word;
@@ -70,6 +68,15 @@ h1 {
     justify-content: space-between;
     border: 2px solid rgba(0, 0, 0, .125);
     border-radius: 0.25rem;
+}
+
+.footer {
+    font-family: "Times New Roman";
+    padding: 20px;
+    margin: 10px;
+    text-align: center;
+    background-color: #1a2846;
+    color: aliceblue;
 }
 
 @media only screen and (max-width: 600px) {
