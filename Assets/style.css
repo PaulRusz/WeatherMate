@@ -78,9 +78,3 @@ h1 {
     background-color: #1a2846;
     color: aliceblue;
 }
-
-@media only screen and (max-width: 600px) {
-    .container {
-        width: 80%;
-    }
-}
