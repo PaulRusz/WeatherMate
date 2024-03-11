@@ -63,7 +63,7 @@ function currentweather(cityName) {
                         currentData.dt,
                         "X"
                     ).format(" MM/DD/YYYY")} </span></li>
-                    <li><img src ="http://openweathermap.org/img/wn/${currentData.weather[0].icon}@2x.png" /></li>
+                    <li><img src ="https://openweathermap.org/img/wn/${currentData.weather[0].icon}@2x.png" /></li>
                     <li>Temp: ${currentData.main.temp}</li>
                     <li>Wind: ${currentData.wind.speed}</li>
                     <li>Humidity: ${currentData.main.humidity}</li>
@@ -73,7 +73,7 @@ function currentweather(cityName) {
                         var forecastIndex = i * 8 - 1
                         cards = cards + `<ul class="col-2 col-xl-2 day">
                         <li>${moment(fiveDayForecast.list[forecastIndex].dt, "X").format(" MM/DD/YYYY")}</li>
-                        <li><img src ="http://openweathermap.org/img/wn/${fiveDayForecast.list[forecastIndex].weather[0].icon}@2x.png" /></li>
+                        <li><img src ="https://openweathermap.org/img/wn/${fiveDayForecast.list[forecastIndex].weather[0].icon}@2x.png" /></li>
                         <li>Temp: ${fiveDayForecast.list[forecastIndex].main.temp}</li>
                         <li>Wind: ${fiveDayForecast.list[forecastIndex].wind_speed}</li>
                         <li>Humidity: ${fiveDayForecast.list[forecastIndex].humidity}</li>
