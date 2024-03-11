@@ -38,7 +38,7 @@ function weatherDashboard(event) {
 // obtains the current weather for a city
 function currentweather(cityName) {
 
-    var queryURL = `http://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${APIKey}`;
+    var queryURL = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${APIKey}`;
     console.trace(cityName)
     fetch(queryURL)
         .then(function (response) {
@@ -46,7 +46,7 @@ function currentweather(cityName) {
         })
         .then(function (currentData) {
             console.log(currentData);
-            var currentForecast = `http://api.openweathermap.org/data/2.5/forecast?lat=${currentData.coord.lat}&lon=${currentData.coord.lon}&appid=${APIKey}`
+            var currentForecast = `https://api.openweathermap.org/data/2.5/forecast?lat=${currentData.coord.lat}&lon=${currentData.coord.lon}&appid=${APIKey}`
             fetch(currentForecast)
                 .then(function (response) {
                     return response.json();
